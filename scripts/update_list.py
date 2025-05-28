@@ -1,10 +1,11 @@
 import requests
 import re
+from bs4 import BeautifulSoup
 
 # URL of the proxy list page
-url = "https://schoolwebproxy.com/1000-proxies-for-school-chromebook-2025/"
+url = "https://nirbytes.com/post/1000-proxies-for-school-chromebook-2025"
 
-# Domains to exclude from the results
+# Domains to exclude
 excluded_domains = [
     "graph.org",
     "schoolwebproxy.com",
@@ -21,14 +22,22 @@ excluded_domains = [
     "googlesyndication.com"
 ]
 
-# Fetch the page content
+# Fetch page content
 response = requests.get(url)
-text = response.text
+soup = BeautifulSoup(response.text, 'html.parser')
 
-# Extract all URLs starting with https://
-proxy_links = re.findall(r'https://[^\s"<>\n]+', text)
+# Remove the comments section if it exists
+comments_section = soup.find(id="comments")
+if comments_section:
+    comments_section.decompose()  # remove from soup
 
-# Filter out links that contain any excluded domain
+# Now extract only the remaining visible text
+clean_text = soup.get_text()
+
+# Extract all https:// links
+proxy_links = re.findall(r'https://[^\s"<>\n]+', clean_text)
+
+# Filter out excluded domains
 filtered_links = [
     link for link in proxy_links
     if not any(domain in link for domain in excluded_domains)
@@ -37,7 +46,7 @@ filtered_links = [
 # Deduplicate and sort
 filtered_links = sorted(set(filtered_links))
 
-# Write to the file at the root of the repo
+# Write to proxies.txt
 with open("proxies.txt", "w") as f:
     for link in filtered_links:
         f.write(link + "\n")
