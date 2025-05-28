@@ -1,6 +1,11 @@
 import requests
 import re
 from bs4 import BeautifulSoup
+from datetime import datetime
+
+# Use current year to construct the URL
+year = datetime.now().year
+url = f"https://nirbytes.com/post/1000-proxies-for-school-chromebook-{year}"
 
 # URL of the proxy list page
 url = "https://nirbytes.com/post/1000-proxies-for-school-chromebook-2025"
