@@ -1,3 +1,2 @@
 # Schoolwebproxyblock
-Creates a list of new additions to the site schoolwebproxy.com which is often used to bypass school filtering. Admins of institutional or personal networks can incorporate this list, as can maintainers of popular blocklists. 
-This list is automatically updated regularly.
+This list auto-updates to create a list of the web proxy sites listed on nirbytes.com which are often used to bypass network filtering in institutions. This list can be used to inform larger blocklists run by maintainers of such lists or network administrators.
